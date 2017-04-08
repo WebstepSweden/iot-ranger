@@ -1,6 +1,7 @@
 package se.webstep.iotr.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,9 +17,11 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -35,37 +38,35 @@ public class RangerApi {
 
 //    @Inject
 //    private TimerService timerService;
+    // 206881543
 
-    @RequestMapping(method = GET, produces = APPLICATION_JSON)
-    public ResponseEntity getThing() {
+    @RequestMapping(value="register", method = PUT, produces = APPLICATION_JSON)
+    public ResponseEntity getThing(@RequestParam(name = "id") String id,
+                                   @RequestParam(name = "timestamp") @DateTimeFormat(iso = DATE_TIME) LocalDateTime timestamp,
+                                   @RequestParam(name = "location") String location) {
+
         RestTemplate rt = new RestTemplate();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.AUTHORIZATION, "ApiKey d45a7c14c88f48f5937a8fc3254378ad");
-        HttpEntity entity = new HttpEntity<>(null, headers);
+        HttpEntity entity = new HttpEntity<>(null, headers());
+//        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
 
-        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
+        // TODO:
+        // Save registration in local memory
 
-        System.out.println(json);
-
-//        ResponseEntity<String> html2 = rt.getForEntity("http://www.aftonbladet.se", String.class);
-//        HttpHeaders headers = html2.getHeaders();
-//        System.out.println(html2);
-//        ResponseEntity<JsonNode> node = rt.exchange("http://www.aftonbladet.se", HttpMethod.GET, null, JsonNode.class);
+        System.out.println(String.format("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location));
 
         return new ResponseEntity(OK);
+//        return new ResponseEntity(json, OK);
+    }
+
+    private HttpHeaders headers() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "ApiKey d45a7c14c88f48f5937a8fc3254378ad");
+        return headers;
     }
 
 
 
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.add(HttpHeaders.AUTHORIZATION, "SOMETHING");
-
-//        ProtoNominalHoursRequestBody body = new ProtoNominalHoursRequestBody(employeeIds);
-//        HttpEntity<ProtoNominalHoursRequestBody> entity = new HttpEntity<>(body, headers);
-
-
-//    }
 
 
 
