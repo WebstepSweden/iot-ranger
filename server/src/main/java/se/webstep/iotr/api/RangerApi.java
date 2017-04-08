@@ -1,11 +1,16 @@
 package se.webstep.iotr.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
@@ -31,15 +36,36 @@ public class RangerApi {
 //    @Inject
 //    private TimerService timerService;
 
-
-
-
     @RequestMapping(method = GET, produces = APPLICATION_JSON)
-    public ResponseEntity doGet() {
-//        Optional<TimerEntity> entity = timerService.getTimer(uuid);
-//        return entity.isPresent() ? ok(new TimerFetch(entity.get())) : notFound();
+    public ResponseEntity getThing() {
+        RestTemplate rt = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "ApiKey d45a7c14c88f48f5937a8fc3254378ad");
+        HttpEntity entity = new HttpEntity<>(null, headers);
+
+        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
+
+        System.out.println(json);
+
+//        ResponseEntity<String> html2 = rt.getForEntity("http://www.aftonbladet.se", String.class);
+//        HttpHeaders headers = html2.getHeaders();
+//        System.out.println(html2);
+//        ResponseEntity<JsonNode> node = rt.exchange("http://www.aftonbladet.se", HttpMethod.GET, null, JsonNode.class);
+
         return new ResponseEntity(OK);
     }
+
+
+
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.add(HttpHeaders.AUTHORIZATION, "SOMETHING");
+
+//        ProtoNominalHoursRequestBody body = new ProtoNominalHoursRequestBody(employeeIds);
+//        HttpEntity<ProtoNominalHoursRequestBody> entity = new HttpEntity<>(body, headers);
+
+
+//    }
 
 
 
