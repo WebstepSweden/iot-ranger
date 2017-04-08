@@ -1,0 +1,49 @@
+
+Add location (PUT):
+localhost:8080/ranger/location?name=Room+3
+
+--------------------------------------
+
+Get all locations (GET):
+localhost:8080/ranger/locations
+
+Response:
+[
+  {
+    "name": "Room 3",
+    "registrations": []
+  }
+]
+
+--------------------------------------
+
+Get one location:
+localhost:8080/ranger/location?location=Room+3
+
+Response:
+{
+  "name": "Room 3",
+  "registrations": [
+    {
+      "id": "123",
+      "timestamp": "2017-04-08T10:11:12.123",
+      "location": "Room 3"
+    }
+  ]
+}
+
+--------------------------------------
+
+Register (PUT):
+localhost:8080/ranger/register?id=123&timestamp=2017-04-08T10:11:12.123&location=Room+3
+
+response:
+{
+  "id": "123",
+  "timestamp": "2017-04-08T10:11:12.123",
+  "location": "Room 3"
+}
+
+
+--------------------------------------
+
