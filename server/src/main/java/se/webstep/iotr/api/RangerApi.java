@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import se.webstep.iotr.database.Database;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -50,13 +52,15 @@ public class RangerApi {
         HttpEntity entity = new HttpEntity<>(null, headers());
 //        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
 
-        // TODO:
-        // Save registration in local memory
-
         System.out.println(String.format("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location));
 
-        return new ResponseEntity(OK);
-//        return new ResponseEntity(json, OK);
+        if(Database.instance().addLocation(location)) {
+            return new ResponseEntity(OK);
+        } else {
+            return new ResponseEntity(CONFLICT);
+        }
+
+
     }
 
     private HttpHeaders headers() {
