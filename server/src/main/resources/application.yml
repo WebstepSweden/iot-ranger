@@ -1,0 +1,11 @@
+
+server:
+  port: 8080
+
+
+#hibernate:
+#  dialect: org.hibernate.dialect.MySQLDialect
+#  driverClassName: com.mysql.jdbc.Driver
+
+spring:
+  jackson.deserialization.FAIL_ON_UNKNOWN_PROPERTIES: false
