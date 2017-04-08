@@ -1,7 +1,11 @@
 package se.webstep.iotr.database;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toSet;
 
 public class Database {
 
@@ -10,11 +14,12 @@ public class Database {
 
     private Set<Location> locations;
 
-
+    private Set<Registration> registrations;
 
 
     private Database() {
         this.locations = new HashSet<>();
+        this.registrations = new HashSet<>();
     }
 
 
@@ -51,11 +56,44 @@ public class Database {
     }
 
 
+    public Location getLocation(String name) {
+        Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
+        if(!loc.isPresent()) {
+            return null;
+        }
+
+        Location location = loc.get().copy();
+
+        Set<Registration> locRegistrations = registrations.stream().filter(registration -> registration.getLocation().equals(location.getName())).collect(toSet());
+        location.setRegistrations(locRegistrations);
+
+        return location;
+
+    }
+
+
 
 
     public boolean locationExists(String name) {
         return locations.contains(new Location(name));
     }
+
+
+
+    public Registration register(String id, LocalDateTime timestamp, String locationName) {
+
+        Optional<Location> location = locations.stream().filter(l -> l.getName().equals(locationName)).findFirst();
+        if(!location.isPresent()) {
+            return null;
+        }
+
+        Registration registration = new Registration(id, timestamp, location.get().getName());
+        registrations.add(registration);
+        return registration;
+        
+    }
+
+
 
 
 }

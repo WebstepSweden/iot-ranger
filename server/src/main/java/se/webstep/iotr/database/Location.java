@@ -1,6 +1,8 @@
 package se.webstep.iotr.database;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Location {
 
@@ -8,20 +10,29 @@ public class Location {
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private String name;
 
-
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    private Set<Registration> registrations;
 
 
     public Location() {
+        this.registrations = new HashSet<>();
     }
 
 
 
 
     public Location(String name) {
+        this();
         this.name = name;
     }
 
-
+    public Location copy() {
+        
+        Location copy = new Location();
+        copy.setName(this.getName());
+        copy.registrations = new HashSet<>();
+        return copy;
+    }
 
 
     public String getName() {
@@ -33,6 +44,20 @@ public class Location {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+
+
+    public Set<Registration> getRegistrations() {
+        return registrations;
+    }
+
+
+
+
+    public void setRegistrations(Set<Registration> registrations) {
+        this.registrations = registrations;
     }
 
 
