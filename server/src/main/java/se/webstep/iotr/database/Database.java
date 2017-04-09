@@ -15,6 +15,8 @@ public class Database {
 
     private Set<Registration> registrations;
 
+    private Set<Sensor> sensorStates;
+
 
 
     private Database() {
@@ -128,7 +130,13 @@ public class Database {
         
     }
 
+    public void addSensorState(Sensor sensor) {
+        sensorStates.add(sensor);
+    }
 
+    public Set<Sensor> getSensorStates() {
+        return sensorStates;
+    }
 
 
 }
