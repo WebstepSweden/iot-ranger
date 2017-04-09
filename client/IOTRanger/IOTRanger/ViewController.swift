@@ -1,4 +1,9 @@
 import UIKit
+import Alamofire
+
+struct Constants {
+    static let ipAddress = "10.47.54.248"//"10.47.52.99"//
+}
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var roomsTableView: UITableView!
@@ -10,7 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "select", style: UIBarButtonItemStyle.plain , target: self, action: #selector(self.selectSensor))
         self.roomsTableView.dataSource = self
         self.roomsTableView.delegate = self
-        self.roomNames = ["room 1", "room 2", "room 3", "room 4", "room A", "room B", "room C", "room D", "room AND", "room THEN", "room SOME", "room MORE", "room NAMES", "room"]
+        self.roomNames = []
     }
 
     func selectSensor (){
@@ -19,6 +24,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) { 
             self.presentedViewController?.dismiss(animated: true, completion: nil)
         }
+        let diceRoll = Int(arc4random_uniform(10000000))
+        self.getRooms()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -51,6 +58,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("show room view controller")
         default:
             print("this is not my segue")
+        }
+    }
+    
+
+    
+    func getRooms() {
+        Alamofire.request("http://\(Constants.ipAddress):8080/ranger/locations", method: .get).responseJSON { (response) in
+            var rooms:[String]! = []
+            let responseArray = response.result.value as?  [Dictionary<String, AnyObject>]
+            if responseArray != nil {
+                for object in responseArray!{
+                    let roomName = object["name"] as? String
+                    if roomName != nil{
+                        rooms.append(roomName!)
+                    }
+                }
+            }
+            self.roomNames = rooms
+            self.roomsTableView.reloadData()
         }
     }
 

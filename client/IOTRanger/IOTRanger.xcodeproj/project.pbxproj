@@ -15,6 +15,7 @@
 		8A1A57081E98DD2A00FA320C /* IOTRangerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1A57071E98DD2A00FA320C /* IOTRangerTests.swift */; };
 		8A1A57131E98DD2A00FA320C /* IOTRangerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1A57121E98DD2A00FA320C /* IOTRangerUITests.swift */; };
 		8A4917BE1E991A07003C7461 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4917BD1E991A07003C7461 /* RoomViewController.swift */; };
+		B153A02A27030E1BD2C56314 /* Pods_IOTRanger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7690B0E8162992EB9E53DC9 /* Pods_IOTRanger.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3BC8E71D8CDA2D76F37A21F7 /* Pods-IOTRanger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOTRanger.release.xcconfig"; path = "Pods/Target Support Files/Pods-IOTRanger/Pods-IOTRanger.release.xcconfig"; sourceTree = "<group>"; };
 		8A1A56EF1E98DD2900FA320C /* IOTRanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOTRanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1A56F21E98DD2900FA320C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A1A56F41E98DD2900FA320C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		8A1A57121E98DD2A00FA320C /* IOTRangerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOTRangerUITests.swift; sourceTree = "<group>"; };
 		8A1A57141E98DD2A00FA320C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A4917BD1E991A07003C7461 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
+		B95FC837BE0F05738BA390B7 /* Pods-IOTRanger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOTRanger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IOTRanger/Pods-IOTRanger.debug.xcconfig"; sourceTree = "<group>"; };
+		D7690B0E8162992EB9E53DC9 /* Pods_IOTRanger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IOTRanger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B153A02A27030E1BD2C56314 /* Pods_IOTRanger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +88,8 @@
 				8A1A57061E98DD2A00FA320C /* IOTRangerTests */,
 				8A1A57111E98DD2A00FA320C /* IOTRangerUITests */,
 				8A1A56F01E98DD2900FA320C /* Products */,
+				8F47BCC49A09563E1CFA5414 /* Pods */,
+				AF2CE3A8445592CA955C0EEE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +135,23 @@
 			path = IOTRangerUITests;
 			sourceTree = "<group>";
 		};
+		8F47BCC49A09563E1CFA5414 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B95FC837BE0F05738BA390B7 /* Pods-IOTRanger.debug.xcconfig */,
+				3BC8E71D8CDA2D76F37A21F7 /* Pods-IOTRanger.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AF2CE3A8445592CA955C0EEE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7690B0E8162992EB9E53DC9 /* Pods_IOTRanger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +159,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A1A57171E98DD2A00FA320C /* Build configuration list for PBXNativeTarget "IOTRanger" */;
 			buildPhases = (
+				C92561159542E7962699BBCC /* [CP] Check Pods Manifest.lock */,
 				8A1A56EB1E98DD2900FA320C /* Sources */,
 				8A1A56EC1E98DD2900FA320C /* Frameworks */,
 				8A1A56ED1E98DD2900FA320C /* Resources */,
+				4D13F6C4905EDEEC64C2C251 /* [CP] Embed Pods Frameworks */,
+				7F90E461C726F14C2AF9775E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,6 +286,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D13F6C4905EDEEC64C2C251 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IOTRanger/Pods-IOTRanger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F90E461C726F14C2AF9775E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IOTRanger/Pods-IOTRanger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C92561159542E7962699BBCC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8A1A56EB1E98DD2900FA320C /* Sources */ = {
@@ -417,6 +492,7 @@
 		};
 		8A1A57181E98DD2A00FA320C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B95FC837BE0F05738BA390B7 /* Pods-IOTRanger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BY8JMSGP7Z;
@@ -430,6 +506,7 @@
 		};
 		8A1A57191E98DD2A00FA320C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3BC8E71D8CDA2D76F37A21F7 /* Pods-IOTRanger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BY8JMSGP7Z;
