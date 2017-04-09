@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tXg-Zk-pgo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tXg-Zk-pgo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -86,15 +86,38 @@
                                 <rect key="frame" x="16" y="464" width="343" height="183"/>
                                 <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="ClickGraphics"/>
+                                <connections>
+                                    <action selector="tapSensorButton:" destination="KyL-D5-929" eventType="touchUpInside" id="G8V-eb-pGI"/>
+                                </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sOP-G8-RFK">
+                                <rect key="frame" x="16" y="101" width="343" height="355"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registered samples:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cd9-5K-xek">
+                                <rect key="frame" x="16" y="72" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sOP-G8-RFK" firstAttribute="trailing" secondItem="4SR-5s-Yhs" secondAttribute="trailing" id="9KJ-dw-rX1"/>
+                            <constraint firstItem="cd9-5K-xek" firstAttribute="top" secondItem="Qdk-pT-RnC" secondAttribute="bottom" constant="8" symbolic="YES" id="CqG-8B-ggJ"/>
+                            <constraint firstItem="sOP-G8-RFK" firstAttribute="leading" secondItem="4SR-5s-Yhs" secondAttribute="leading" id="Fox-aI-Nkl"/>
+                            <constraint firstItem="cd9-5K-xek" firstAttribute="leading" secondItem="sOP-G8-RFK" secondAttribute="leading" id="Kjn-SO-mRy"/>
+                            <constraint firstItem="4SR-5s-Yhs" firstAttribute="top" secondItem="sOP-G8-RFK" secondAttribute="bottom" constant="8" symbolic="YES" id="V7z-7i-P2r"/>
                             <constraint firstItem="4SR-5s-Yhs" firstAttribute="leading" secondItem="EYy-Dn-clj" secondAttribute="leadingMargin" id="dFE-c0-ayc"/>
+                            <constraint firstItem="cd9-5K-xek" firstAttribute="trailing" secondItem="sOP-G8-RFK" secondAttribute="trailing" id="nSD-yb-p0s"/>
                             <constraint firstItem="4SR-5s-Yhs" firstAttribute="trailing" secondItem="EYy-Dn-clj" secondAttribute="trailingMargin" id="qxX-6Q-jPf"/>
                             <constraint firstAttribute="bottom" secondItem="4SR-5s-Yhs" secondAttribute="bottom" constant="20" symbolic="YES" id="u6k-do-PBE"/>
+                            <constraint firstItem="sOP-G8-RFK" firstAttribute="top" secondItem="cd9-5K-xek" secondAttribute="bottom" constant="8" id="xiw-61-4WW"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="samplesTableview" destination="sOP-G8-RFK" id="9SM-9v-vrK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZf-4D-6C1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

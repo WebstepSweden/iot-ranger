@@ -2,7 +2,8 @@ import UIKit
 import Alamofire
 
 struct Constants {
-    static let ipAddress = "10.47.54.248"//"10.47.52.99"//
+    static let ipAddress = "10.47.54.248" //"10.47.52.99"//
+    static let sensorId = "206881543"
 }
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -16,6 +17,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.roomsTableView.dataSource = self
         self.roomsTableView.delegate = self
         self.roomNames = []
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getRooms()
     }
 
     func selectSensor (){
@@ -60,8 +66,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("this is not my segue")
         }
     }
-    
-
     
     func getRooms() {
         Alamofire.request("http://\(Constants.ipAddress):8080/ranger/locations", method: .get).responseJSON { (response) in
