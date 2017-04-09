@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import se.webstep.iotr.database.Database;
 import se.webstep.iotr.database.Sensor;
 
 import java.io.BufferedReader;
@@ -53,6 +54,7 @@ public class DtClient extends Thread{
     }
 
     public void run() {
+        Sensor sensor = null;
         while (!stop) {
             System.out.println("Hello from a DtClient!");
             try {
@@ -61,7 +63,7 @@ public class DtClient extends Thread{
                 System.out.println("God Morgon!");
             }
             try {
-                getSensor();
+                Database.instance().addSensorState(getSensor());
             } catch (IOException e) {
                 System.out.println("TJOHOO!!!!");
             }
