@@ -1,4 +1,4 @@
-package se.webstep.iotr.client;
+package se.webstep.iotr.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
