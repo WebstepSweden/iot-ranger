@@ -1,5 +1,7 @@
 package se.webstep.iotr.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import se.webstep.iotr.client.DtClient;
 import se.webstep.iotr.database.Database;
 import se.webstep.iotr.database.Location;
 import se.webstep.iotr.database.Registration;
@@ -34,6 +37,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 public class RangerApi {
 
+    private final Logger logger = LoggerFactory.getLogger(RangerApi.class);
+
 
     // 1: 206881543
 
@@ -54,7 +59,7 @@ public class RangerApi {
 
         HttpEntity entity = new HttpEntity<>(null, headers());
 
-        System.out.println(String.format("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location));
+        logger.debug("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location);
 
         Registration registration = Database.instance().register(id, timestamp, location);
         return new ResponseEntity(registration, OK);
