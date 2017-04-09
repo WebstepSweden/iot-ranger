@@ -15,6 +15,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.webstep.iotr.database.Database;
 import se.webstep.iotr.database.Sensor;
 
@@ -23,7 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class DtClient extends Thread{
+public class DtClient extends Thread {
+
+    private final Logger logger = LoggerFactory.getLogger(DtClient.class);
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String API_KEY = "ApiKey d45a7c14c88f48f5937a8fc3254378ad";
@@ -56,16 +60,16 @@ public class DtClient extends Thread{
     public void run() {
         Sensor sensor = null;
         while (!stop) {
-            System.out.println("Hello from a DtClient!");
+            //logger.info("Hello from a DtClient!");
             try {
                 sleep(3000);
             } catch (InterruptedException e) {
-                System.out.println("God Morgon!");
+                //logger.info("God Morgon!");
             }
             try {
                 Database.instance().addSensorState(getSensor());
             } catch (IOException e) {
-                System.out.println("TJOHOO!!!!");
+
             }
         }
     }
@@ -78,7 +82,7 @@ public class DtClient extends Thread{
         try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
             HttpEntity entity1 = response1.getEntity();
             Sensor sensor = objectMapper.readValue(entity1.getContent(), Sensor.class);
-            System.out.println("Pollad data: [" + sensor.toString() + "]" );
+            logger.info("Pollad data: [" + sensor.toString() + "]");
             EntityUtils.consume(entity1);
             return sensor;
         }
@@ -91,7 +95,7 @@ public class DtClient extends Thread{
         httpGet.setHeader(AUTHORIZATION_HEADER, API_KEY);
 
         try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
-            System.out.println("Watch out!!!!");
+            logger.info("Watch out!!!!");
             HttpEntity entity1 = response1.getEntity();
             InputStream inputStreamObject = entity1.getContent();
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStreamObject, "UTF-8"));

@@ -3,6 +3,7 @@ package se.webstep.iotr.database;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import se.webstep.iotr.api.LocalDateTimeSerializer;
+
 import java.time.LocalDateTime;
 
 public class Registration {
@@ -21,12 +22,8 @@ public class Registration {
     private boolean inRange;
 
 
-
-
     public Registration() {
     }
-
-
 
 
     public Registration(String id, LocalDateTime timestamp, String location) {
@@ -38,13 +35,9 @@ public class Registration {
     }
 
 
-
-
     public String getId() {
         return id;
     }
-
-
 
 
     public void setId(String id) {
@@ -52,13 +45,9 @@ public class Registration {
     }
 
 
-
-
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
-
-
 
 
     public void setTimestamp(LocalDateTime timestamp) {
@@ -66,13 +55,9 @@ public class Registration {
     }
 
 
-
-
     public String getLocation() {
         return location;
     }
-
-
 
 
     public void setLocation(String location) {
@@ -80,20 +65,14 @@ public class Registration {
     }
 
 
-
-
     public boolean isInRange() {
         return inRange;
     }
 
 
-
-
     public void setInRange(boolean inRange) {
         this.inRange = inRange;
     }
-
-
 
 
     @Override
@@ -110,8 +89,6 @@ public class Registration {
     }
 
 
-
-
     @Override
     public int hashCode() {
         int result = id.hashCode();
@@ -120,8 +97,6 @@ public class Registration {
         result = 31 * result + (inRange ? 1 : 0);
         return result;
     }
-
-
 
 
     @Override
