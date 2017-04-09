@@ -7,6 +7,7 @@ import se.webstep.iotr.database.Sensor;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+@SuppressWarnings("SpellCheckingInspection")
 @Component
 public class Reconsiliator {
 
@@ -20,11 +21,17 @@ public class Reconsiliator {
 
         LocalDateTime sensorDateTime = sensorState.getLastPressed();
 
+        if(sensorDateTime == null) {
+            return false;
+        }
+
         long regMillis = regDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
         long sensorMills = sensorDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        return Math.abs(regMillis-sensorMills) < toleranceMillis;
+        boolean timeWithinRange = Math.abs(regMillis-sensorMills) < toleranceMillis;
+
+        return timeWithinRange;
 
 
     }
