@@ -19,7 +19,7 @@ public class Reconsiliator {
 
 //        LocalDateTime sensorDateTime = sensorState.getLastUpdated().toLocalDateTime();
 
-
+        return false;
 
 
     }
