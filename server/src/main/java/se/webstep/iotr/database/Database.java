@@ -71,6 +71,16 @@ public class Database {
     }
 
 
+    public boolean deleteLocation(String name) {
+        Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
+        if(!loc.isPresent()) {
+            return false;
+        }
+
+        locations.remove(loc.get());
+        return true;
+
+    }
 
 
     public boolean locationExists(String name) {
