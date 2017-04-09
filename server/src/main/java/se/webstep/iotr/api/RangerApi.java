@@ -1,10 +1,8 @@
 package se.webstep.iotr.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,17 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import se.webstep.iotr.database.Database;
+import se.webstep.iotr.database.Location;
 import se.webstep.iotr.database.Registration;
-import javax.validation.Valid;
+import se.webstep.iotr.database.Sensor;
+import se.webstep.iotr.service.Reconsiliator;
+import javax.inject.Inject;
 import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 import static org.springframework.http.HttpStatus.*;
@@ -42,17 +39,16 @@ public class RangerApi {
 
     // 2: 206854020
 
-    private final String ID = "206854020";
 
-
-
+    @Inject
+    private Reconsiliator reconsiliator;
 
 
 
     @RequestMapping(value = "register", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity register(@RequestParam(name = "id") String id,
-                                      @RequestParam(name = "timestamp") @DateTimeFormat(iso = DATE_TIME) LocalDateTime timestamp,
-                                      @RequestParam(name = "location") String location) {
+                                   @RequestParam(name = "timestamp") @DateTimeFormat(iso = DATE_TIME) LocalDateTime timestamp,
+                                   @RequestParam(name = "location") String location) {
 
         RestTemplate rt = new RestTemplate();
 
@@ -66,9 +62,10 @@ public class RangerApi {
     }
 
 
+
+
     @RequestMapping(value = "location", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity addLocation(@RequestParam(name = "name") String name) {
-
 
         if (Database.instance().addLocation(name)) {
             return new ResponseEntity(OK);
@@ -79,6 +76,8 @@ public class RangerApi {
     }
 
 
+
+
     @RequestMapping(value = "locations", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity getLocations() {
 
@@ -86,22 +85,52 @@ public class RangerApi {
 
     }
 
-    @RequestMapping(value = "location", method = GET, produces = APPLICATION_JSON)
-    public ResponseEntity getLocation(@RequestParam(name="location") String locationName) {
 
-        return new ResponseEntity(Database.instance().getLocation(locationName), OK);
+
+
+    @RequestMapping(value = "location", method = GET, produces = APPLICATION_JSON)
+    public ResponseEntity getLocation(@RequestParam(name = "location") String locationName) {
+
+        Location location = Database.instance().getLocation(locationName);
+
+        if(location == null) {
+            return new ResponseEntity(NOT_FOUND);
+        }
+
+        Set<Registration> registrations = location.getRegistrations();
+        Set<Sensor> sensorStates = Database.instance().getSensorStates();
+
+        long toleranceMillis = 1500;
+
+        for(Registration registration : registrations) {
+            for(Sensor sensorState : sensorStates) {
+                if(reconsiliator.match(registration, sensorState, toleranceMillis)) {
+                    registration.setInRange(true);
+                }
+
+            }
+        }
+
+
+
+        return new ResponseEntity(location, OK);
 
     }
+
+
 
 
     @RequestMapping(value = "location", method = DELETE, produces = APPLICATION_JSON)
-    public ResponseEntity deleteLocation(@RequestParam(name="location") String locationName) {
+    public ResponseEntity deleteLocation(@RequestParam(name = "location") String locationName) {
 
         boolean deleted = Database.instance().deleteLocation(locationName);
-        
+
         return new ResponseEntity(deleted ? OK : NOT_FOUND);
 
     }
+
+
+
 
     @RequestMapping(value = "ping", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity ping() {
@@ -113,17 +142,12 @@ public class RangerApi {
 
 
 
-
     private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "ApiKey d45a7c14c88f48f5937a8fc3254378ad");
-        headers.set(HttpHeaders.CACHE_CONTROL,"no-cache");
+        headers.set(HttpHeaders.CACHE_CONTROL, "no-cache");
         return headers;
     }
-
-    
-
-
 
 
 
@@ -164,7 +188,6 @@ public class RangerApi {
 }
 
 //        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
-
 
 
 //    @RequestMapping(value = "subscribe", method = GET, produces = APPLICATION_JSON)
