@@ -15,12 +15,40 @@ public class Database {
 
     private Set<Registration> registrations;
 
+    private Set<Sensor> sensorStates;
+
+
 
     private Database() {
+
         this.locations = new HashSet<>();
         this.registrations = new HashSet<>();
+        insertTestData();
+
     }
 
+
+    private void insertTestData() {
+
+        addLocation("Lobby");
+        addLocation("Boiler Room");
+        addLocation("Parking");
+        addLocation("Tee 1");
+
+        String id = "206881543";
+        LocalDateTime now = LocalDateTime.now();
+        register(id, now, "Lobby");
+        register(id, now.minusSeconds(1), "Lobby");
+        register(id, now.minusSeconds(2), "Lobby");
+        register(id, now.minusSeconds(3), "Lobby");
+        register(id, now, "Boiler Room");
+        register(id, now.minusSeconds(3), "Boiler Room");
+        register(id, now, "Parking");
+        register(id, now.minusSeconds(4), "Parking");
+        register(id, now, "Tee 1");
+        register(id, now.minusMinutes(3).minusSeconds(12), "Tee 1");
+
+    }
 
 
 
@@ -102,7 +130,13 @@ public class Database {
         
     }
 
+    public void addSensorState(Sensor sensor) {
+        sensorStates.add(sensor);
+    }
 
+    public Set<Sensor> getSensorStates() {
+        return sensorStates;
+    }
 
 
 }
