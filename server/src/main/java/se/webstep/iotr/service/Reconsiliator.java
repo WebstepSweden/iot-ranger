@@ -18,7 +18,7 @@ public class Reconsiliator {
 
         LocalDateTime regDateTime = registration.getTimestamp();
 
-        LocalDateTime sensorDateTime = sensorState.getLastUpdated().toLocalDateTime();
+        LocalDateTime sensorDateTime = sensorState.getLastPressed();
 
         long regMillis = regDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
