@@ -1,8 +1,10 @@
 package se.webstep.iotr.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +17,10 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -33,7 +38,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class RangerApi {
 
 
-    // 206881543
+    // 1: 206881543
+
+    // 2: 206854020
+
+    private final String ID = "206854020";
+
+
+
+
+
 
     @RequestMapping(value = "register", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity register(@RequestParam(name = "id") String id,
@@ -84,11 +98,17 @@ public class RangerApi {
     public ResponseEntity deleteLocation(@RequestParam(name="location") String locationName) {
 
         boolean deleted = Database.instance().deleteLocation(locationName);
-
+        
         return new ResponseEntity(deleted ? OK : NOT_FOUND);
 
     }
 
+    @RequestMapping(value = "ping", method = GET, produces = APPLICATION_JSON)
+    public ResponseEntity ping() {
+
+        return new ResponseEntity(OK);
+
+    }
 
 
 
@@ -97,9 +117,11 @@ public class RangerApi {
     private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "ApiKey d45a7c14c88f48f5937a8fc3254378ad");
+        headers.set(HttpHeaders.CACHE_CONTROL,"no-cache");
         return headers;
     }
 
+    
 
 
 
@@ -142,3 +164,30 @@ public class RangerApi {
 }
 
 //        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
+
+
+
+//    @RequestMapping(value = "subscribe", method = GET, produces = APPLICATION_JSON)
+//    public void subscribe() {
+//
+//        String body = "";
+////        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
+////                                        /v1/subscribe?thing_ids=<thingID1>&amp;thing_ids=<thingID2>
+//        HttpEntity entity = new HttpEntity<>(null, headers());
+//        String url = String.format("https://api.disruptive-technologies.com/v1/subscribe?thing_ids=<thingID1>", ID);
+//
+//        RestTemplate rt = new RestTemplate();
+//        ResponseEntity<JsonNode> responseEntity = rt.exchange( url, HttpMethod.GET, entity, JsonNode.class );
+//
+//        InputStream responseInputStream;
+//        try {
+//            responseInputStream = responseEntity.getBody().
+//        }
+//        catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//
+//
+//
+//    }

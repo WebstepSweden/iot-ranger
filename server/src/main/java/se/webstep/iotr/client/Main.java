@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import se.webstep.iotr.database.Sensor;
 
 public class Main {
 
@@ -16,7 +17,7 @@ public class Main {
         try {
 //            Sensors sensors = new DtClient().getSensors();
 //            Sensor sensor = new DtClient().getSensor("206881543");
-            Sensor sensor = new DtClient().watch("206881543");
+//            Sensor sensor = new DtClient().watch("206881543");
         } catch (Exception e) {
             e.printStackTrace();
         }
