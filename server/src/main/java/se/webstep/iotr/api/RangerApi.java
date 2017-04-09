@@ -39,7 +39,6 @@ public class RangerApi {
 
     // 2: 206854020
 
-    private final String ID = "206854020";
 
     @Inject
     private Reconsiliator reconsiliator;
