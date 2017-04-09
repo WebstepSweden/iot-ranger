@@ -69,7 +69,7 @@ public class Sensor {
 
     public void setLastUpdated(ZonedDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
-        lastPressed = lastUpdated.toLocalDateTime();
+        lastPressed = lastUpdated.toLocalDateTime().plusHours(2);
     }
 
     public LocalDateTime getLastPressed() {
