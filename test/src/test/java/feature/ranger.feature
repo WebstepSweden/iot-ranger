@@ -12,3 +12,13 @@ Feature: Ranger
     Then the status code is 200
     And location "orvar" is created
 
+  Scenario: as a User i want to check if the Ranger Service is up
+    Given ranger service is up and running
+    When a user calls the ranger Service
+    Then the status code is 200
+
+  Scenario: as a User i want to check that location xxx doesn't exits
+    Given ranger service is up and running
+    When a user tries to get location "xxx"
+    Then the status code is 404
+
