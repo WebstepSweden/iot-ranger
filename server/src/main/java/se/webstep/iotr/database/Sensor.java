@@ -3,6 +3,7 @@ package se.webstep.iotr.database;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public class Sensor {
     private ZonedDateTime registered;
     @JsonProperty("last_updated")
     private ZonedDateTime lastUpdated;
+    private LocalDateTime lastPressed;
 
     private State state;
     private Type type;
@@ -67,6 +69,11 @@ public class Sensor {
 
     public void setLastUpdated(ZonedDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+        lastPressed = lastUpdated.toLocalDateTime();
+    }
+
+    public LocalDateTime getLastPressed() {
+        return lastPressed;
     }
 
     public State getState() {
@@ -103,8 +110,10 @@ public class Sensor {
      }
      */
     private static class State {
+
         private String id;
         private ZonedDateTime updated;
+        private ZonedDateTime lastPressed;
         private Map<String, Object> properties;
 
         public String getId() {
@@ -117,6 +126,14 @@ public class Sensor {
 
         public ZonedDateTime getUpdated() {
             return updated;
+        }
+
+        public ZonedDateTime getLastPressed() {
+            return lastPressed;
+        }
+
+        public void setLastPressed(ZonedDateTime lastPressed) {
+            this.lastPressed = lastPressed;
         }
 
         public void setUpdated(ZonedDateTime updated) {
@@ -135,8 +152,7 @@ public class Sensor {
         public String toString() {
             return "State{" +
                     "id='" + id + '\'' +
-                    ", updated=" + updated +
-                    ", properties=" + properties +
+                    ", lastPressed=" + lastPressed +
                     '}';
         }
     }
@@ -209,5 +225,13 @@ public class Sensor {
                     ", primary='" + primary + '\'' +
                     '}';
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id='" + id + '\'' +
+                ", lastPressed=" + lastPressed +
+                '}';
     }
 }
