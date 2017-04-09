@@ -1,26 +1,17 @@
 package StepDefs;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
-
-import java.util.Map;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
-import io.restassured.http.ContentType;
-import org.apache.commons.lang3.StringUtils;
-import cucumber.api.java8.En.*;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.hamcrest.text.StringContainsInOrder;
+
 
 /**
  * Created by frunn on 08/04/2017.
@@ -36,6 +27,16 @@ public class RangerStepDefinitions implements En {
     public void ranger_service_up() {
         request = given().auth().none();
     }
+
+    @Given("location \"(.*)\" doesn't exits")
+    public void check_location_not_exits(String locationName) {
+
+    }
+
+    @When("a user makes a register on location \"(.*)\"")
+    public void make_register_on_location(String locationName) {
+    }
+
 
     @When("a user tries to get location \"(.*)\"")
     public void a_user_tries_to_get_location(String locationName) {
@@ -67,12 +68,21 @@ public class RangerStepDefinitions implements En {
         System.out.println(response.getStatusCode());
     }
 
+    @Then("xxxxxxxxxxx")
+    public void verify_status_code_fail() {
+
+    }
+
     @And("location \"(.*)\" is created")
     public void response_include_location(String locationName) {
         response = request.get(BASEURL + "/locations");
         response.then().body("name",hasItems(locationName));
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
+    }
+
+    @And("payload is empty")
+    public void payload_is_empty() {
     }
 
     @After("@CleanUpCreateLocation")
