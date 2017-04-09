@@ -80,6 +80,19 @@ public class RangerApi {
     }
 
 
+    @RequestMapping(value = "location", method = DELETE, produces = APPLICATION_JSON)
+    public ResponseEntity deleteLocation(@RequestParam(name="location") String locationName) {
+
+        boolean deleted = Database.instance().deleteLocation(locationName);
+
+        return new ResponseEntity(deleted ? OK : NOT_FOUND);
+
+    }
+
+
+
+
+
 
     private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
@@ -89,43 +102,6 @@ public class RangerApi {
 
 
 
-
-    @RequestMapping(value = "/list", method = POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-    public ResponseEntity fetch(@RequestBody @Valid List<UUID> uuids) {
-//        List<TimerEntity> entities = timerService.getTimers(uuids);
-//        return ok(entities.stream().map(TimerFetch::new).collect(toList()));
-        return null;
-    }
-
-
-
-
-    @RequestMapping(method = POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-    public ResponseEntity store(/*@RequestBody @Valid TimerCreate timerCreate*/) {
-//        TimerEntity newEntity = timerService.saveNewTimer(timerCreate.getName(), timerCreate.getDescription(), timerCreate.getDeadline());
-//        TimerFetch createdTimer = new TimerFetch(newEntity);
-//        return ok(createdTimer);
-        return null;
-    }
-
-
-
-
-    @RequestMapping(method = PUT, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-    public ResponseEntity update(@RequestBody @Valid TimerUpdate timerUpdate) {
-//        Optional<TimerEntity> updatedEntity = timerService.updateTimer(timerUpdate.getUuid(), timerUpdate.getName(), timerUpdate.getDescription(), timerUpdate.getDeadline());
-//        return updatedEntity.isPresent() ? ok(new TimerFetch(updatedEntity.get())) : notFound();
-        return null;
-    }
-
-
-
-
-    @RequestMapping(value = "{uuid}", method = DELETE)
-    public ResponseEntity delete(@PathVariable("uuid") @Valid UUID uuid) {
-//        return timerService.deleteTimer(uuid) ? ok() : notFound();
-        return null;
-    }
 
 
 
