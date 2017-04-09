@@ -69,7 +69,7 @@ public class Sensor {
 
     public void setLastUpdated(ZonedDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
-        lastPressed = lastUpdated.toLocalDateTime();
+        lastPressed = lastUpdated.toLocalDateTime().plusHours(2);
     }
 
     public LocalDateTime getLastPressed() {
@@ -234,4 +234,25 @@ public class Sensor {
                 ", lastPressed=" + lastPressed +
                 '}';
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sensor)) return false;
+
+        Sensor sensor = (Sensor) o;
+
+        if (getId() != null ? !getId().equals(sensor.getId()) : sensor.getId() != null) return false;
+        return getLastPressed() != null ? getLastPressed().equals(sensor.getLastPressed()) : sensor.getLastPressed() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getLastPressed() != null ? getLastPressed().hashCode() : 0);
+        return result;
+    }
+
+
 }

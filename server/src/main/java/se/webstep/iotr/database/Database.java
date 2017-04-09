@@ -23,6 +23,7 @@ public class Database {
 
         this.locations = new HashSet<>();
         this.registrations = new HashSet<>();
+        this.sensorStates = new HashSet<>();
         insertTestData();
 
     }
