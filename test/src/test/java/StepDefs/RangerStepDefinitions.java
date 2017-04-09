@@ -37,12 +37,23 @@ public class RangerStepDefinitions implements En {
         request = given().auth().none();
     }
 
+    @When("a user tries to get location \"(.*)\"")
+    public void a_user_tries_to_get_location(String locationName) {
+        response = request.when().queryParam("location", locationName).get(BASEURL + "/location");
+        System.out.println("response: " + response.prettyPrint());
+    }
+
+    @When("a user calls the ranger Service")
+    public void a_user_calls_ranger_service() {
+        response = request.when().get(BASEURL + "/ping");
+        //System.out.println("response: " + response.prettyPrint());
+    }
+
     @When("a user retrieves List of location")
     public void a_user_retrieves_list_of_locations() {
         response = request.when().get(BASEURL + "/locations");
         System.out.println("response: " + response.prettyPrint());
     }
-
 
     @When("a user creates a location called \"(.*)\"")
     public void a_user_creates_location_namned(String locationName) {
@@ -53,6 +64,7 @@ public class RangerStepDefinitions implements En {
     @Then("the status code is (\\d+)")
     public void verify_status_code(int statusCode) {
         response.then().statusCode(statusCode);
+        System.out.println(response.getStatusCode());
     }
 
     @And("location \"(.*)\" is created")
@@ -60,13 +72,12 @@ public class RangerStepDefinitions implements En {
         response = request.get(BASEURL + "/locations");
         response.then().body("name",hasItems(locationName));
         String responseBody = response.getBody().asString();
-        System.out.println(responseBody + " " + responseBody.length());
+        System.out.println(responseBody);
     }
 
     @After("@CleanUpCreateLocation")
     public void do_this_after_scenarioX() {
         request.queryParam("location", "orvar").delete(BASEURL + "/location");
-
     }
 }
 
