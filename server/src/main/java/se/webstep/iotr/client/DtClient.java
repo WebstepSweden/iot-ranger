@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class DtClient extends Thread{
+public class DtClient extends Thread {
 
     private final Logger logger = LoggerFactory.getLogger(DtClient.class);
 
@@ -60,11 +60,11 @@ public class DtClient extends Thread{
     public void run() {
         Sensor sensor = null;
         while (!stop) {
-            logger.debug("Hello from a DtClient!");
+            //logger.info("Hello from a DtClient!");
             try {
                 sleep(3000);
             } catch (InterruptedException e) {
-                logger.debug("God Morgon!");
+                //logger.info("God Morgon!");
             }
             try {
                 Database.instance().addSensorState(getSensor());
@@ -82,7 +82,7 @@ public class DtClient extends Thread{
         try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
             HttpEntity entity1 = response1.getEntity();
             Sensor sensor = objectMapper.readValue(entity1.getContent(), Sensor.class);
-            logger.debug("Pollad data: [" + sensor.toString() + "]" );
+            logger.info("Pollad data: [" + sensor.toString() + "]");
             EntityUtils.consume(entity1);
             return sensor;
         }
@@ -95,7 +95,7 @@ public class DtClient extends Thread{
         httpGet.setHeader(AUTHORIZATION_HEADER, API_KEY);
 
         try (CloseableHttpResponse response1 = httpclient.execute(httpGet)) {
-            logger.debug("Watch out!!!!");
+            logger.info("Watch out!!!!");
             HttpEntity entity1 = response1.getEntity();
             InputStream inputStreamObject = entity1.getContent();
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStreamObject, "UTF-8"));

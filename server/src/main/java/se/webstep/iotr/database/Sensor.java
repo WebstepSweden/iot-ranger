@@ -95,20 +95,20 @@ public class Sensor {
 
 
     /**
-     "state": {
-     "id": "206881543",
-     "updated": "2017-04-08T21:30:22.586920970Z",
-     "properties": {
-     "temperature": 20,
-     "object_present": false,
-     "touch": false,
-     "last_pressed": "2017-04-08T16:58:45.086921291Z",
-     "rssi": -90,
-     "rssi_strength": 2,
-     "battery_voltage": 2.97,
-     "battery_percentage": 100,
-     "connector_id": "con-000"
-     }
+     * "state": {
+     * "id": "206881543",
+     * "updated": "2017-04-08T21:30:22.586920970Z",
+     * "properties": {
+     * "temperature": 20,
+     * "object_present": false,
+     * "touch": false,
+     * "last_pressed": "2017-04-08T16:58:45.086921291Z",
+     * "rssi": -90,
+     * "rssi_strength": 2,
+     * "battery_voltage": 2.97,
+     * "battery_percentage": 100,
+     * "connector_id": "con-000"
+     * }
      */
     private static class State {
 
@@ -159,14 +159,14 @@ public class Sensor {
     }
 
     /**
-     "type": {
-     "id": "touch",
-     "name": "",
-     "icon": "",
-     "chart_type": "",
-     "primary": ""
-     },
-     "firmware": ""
+     * "type": {
+     * "id": "touch",
+     * "name": "",
+     * "icon": "",
+     * "chart_type": "",
+     * "primary": ""
+     * },
+     * "firmware": ""
      */
     private static class Type {
         private String id;

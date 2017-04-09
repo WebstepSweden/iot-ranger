@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Location {
 
-    
+
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private String name;
 
@@ -19,15 +19,13 @@ public class Location {
     }
 
 
-
-
     public Location(String name) {
         this();
         this.name = name;
     }
 
     public Location copy() {
-        
+
         Location copy = new Location();
         copy.setName(this.getName());
         copy.registrations = new HashSet<>();
@@ -40,13 +38,9 @@ public class Location {
     }
 
 
-
-
     public void setName(String name) {
         this.name = name;
     }
-
-
 
 
     public Set<Registration> getRegistrations() {
@@ -54,13 +48,9 @@ public class Location {
     }
 
 
-
-
     public void setRegistrations(Set<Registration> registrations) {
         this.registrations = registrations;
     }
-
-
 
 
     @Override
@@ -74,14 +64,10 @@ public class Location {
     }
 
 
-
-
     @Override
     public int hashCode() {
         return name.hashCode();
     }
-
-
 
 
     @Override

@@ -1,5 +1,8 @@
 package se.webstep.iotr.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
@@ -8,6 +11,7 @@ import static java.util.stream.Collectors.toSet;
 
 public class Database {
 
+    private final Logger logger = LoggerFactory.getLogger(Database.class);
 
     private static Database instance;
 
@@ -16,7 +20,6 @@ public class Database {
     private Set<Registration> registrations;
 
     private Set<Sensor> sensorStates;
-
 
 
     private Database() {
@@ -52,7 +55,6 @@ public class Database {
     }
 
 
-
     public static Database instance() {
         if (instance == null) {
             instance = new Database();
@@ -61,13 +63,9 @@ public class Database {
     }
 
 
-
-
     public Set<Location> getLocations() {
         return locations;
     }
-
-
 
 
     public boolean addLocation(String name) {
@@ -86,7 +84,7 @@ public class Database {
 
     public Location getLocation(String name) {
         Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
-        if(!loc.isPresent()) {
+        if (!loc.isPresent()) {
             return null;
         }
 
@@ -102,7 +100,7 @@ public class Database {
 
     public boolean deleteLocation(String name) {
         Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
-        if(!loc.isPresent()) {
+        if (!loc.isPresent()) {
             return false;
         }
 
@@ -117,18 +115,17 @@ public class Database {
     }
 
 
-
     public Registration register(String id, LocalDateTime timestamp, String locationName) {
 
         Optional<Location> location = locations.stream().filter(l -> l.getName().equals(locationName)).findFirst();
-        if(!location.isPresent()) {
+        if (!location.isPresent()) {
             return null;
         }
 
         Registration registration = new Registration(id, timestamp, location.get().getName());
         registrations.add(registration);
         return registration;
-        
+
     }
 
     public void addSensorState(Sensor sensor) {

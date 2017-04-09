@@ -39,113 +39,66 @@ public class RangerApi {
 
     private final Logger logger = LoggerFactory.getLogger(RangerApi.class);
 
-
     // 1: 206881543
-
     // 2: 206854020
-
 
     @Inject
     private Reconsiliator reconsiliator;
-
-
 
     @RequestMapping(value = "register", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity register(@RequestParam(name = "id") String id,
                                    @RequestParam(name = "timestamp") @DateTimeFormat(iso = DATE_TIME) LocalDateTime timestamp,
                                    @RequestParam(name = "location") String location) {
-
         RestTemplate rt = new RestTemplate();
-
         HttpEntity entity = new HttpEntity<>(null, headers());
-
-        logger.debug("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location);
-
+        logger.info("Register, id: %s, timestamp: %s, location: %s", id, timestamp, location);
         Registration registration = Database.instance().register(id, timestamp, location);
         return new ResponseEntity(registration, OK);
-
     }
-
-
-
 
     @RequestMapping(value = "location", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity addLocation(@RequestParam(name = "name") String name) {
-
         if (Database.instance().addLocation(name)) {
             return new ResponseEntity(OK);
         } else {
             return new ResponseEntity(CONFLICT);
         }
-
     }
-
-
-
 
     @RequestMapping(value = "locations", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity getLocations() {
-
         return new ResponseEntity(Database.instance().getLocations(), OK);
-
     }
-
-
-
 
     @RequestMapping(value = "location", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity getLocation(@RequestParam(name = "location") String locationName) {
-
         Location location = Database.instance().getLocation(locationName);
-
-        if(location == null) {
+        if (location == null) {
             return new ResponseEntity(NOT_FOUND);
         }
-
         Set<Registration> registrations = location.getRegistrations();
         Set<Sensor> sensorStates = Database.instance().getSensorStates();
-
         long toleranceMillis = 1500;
-
-        for(Registration registration : registrations) {
-            for(Sensor sensorState : sensorStates) {
-                if(reconsiliator.match(registration, sensorState, toleranceMillis)) {
+        for (Registration registration : registrations) {
+            for (Sensor sensorState : sensorStates) {
+                if (reconsiliator.match(registration, sensorState, toleranceMillis)) {
                     registration.setInRange(true);
                 }
-
             }
         }
-
-
-
         return new ResponseEntity(location, OK);
-
     }
-
-
-
 
     @RequestMapping(value = "location", method = DELETE, produces = APPLICATION_JSON)
     public ResponseEntity deleteLocation(@RequestParam(name = "location") String locationName) {
-
         boolean deleted = Database.instance().deleteLocation(locationName);
-
         return new ResponseEntity(deleted ? OK : NOT_FOUND);
-
     }
-
-
-
 
     @RequestMapping(value = "ping", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity ping() {
-
         return new ResponseEntity(OK);
-
     }
-
-
-
 
     private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
@@ -154,29 +107,17 @@ public class RangerApi {
         return headers;
     }
 
-
-
-
     private ResponseEntity ok() {
         return new ResponseEntity(OK);
     }
-
-
-
 
     private ResponseEntity ok(Object object) {
         return new ResponseEntity(object, OK);
     }
 
-
-
-
     private ResponseEntity notFound() {
         return new ResponseEntity(NOT_FOUND);
     }
-
-
-
 
     @ExceptionHandler({
             MethodArgumentTypeMismatchException.class,
@@ -188,13 +129,9 @@ public class RangerApi {
     @ResponseStatus(value = org.springframework.http.HttpStatus.BAD_REQUEST)
     protected void badRequestExceptions() {
     }
-
-
 }
 
 //        ResponseEntity<JsonNode> json= rt.exchange("https://api.disruptive-technologies.com/v1/things", HttpMethod.GET, entity, JsonNode.class);
-
-
 //    @RequestMapping(value = "subscribe", method = GET, produces = APPLICATION_JSON)
 //    public void subscribe() {
 //
