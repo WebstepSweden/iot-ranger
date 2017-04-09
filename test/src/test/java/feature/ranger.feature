@@ -22,3 +22,8 @@ Feature: Ranger
     When a user tries to get location "xxx"
     Then the status code is 404
 
+  Scenario: as a User i want to make a register on a location that doesn't exits
+    Given location "xxx" doesn't exits
+    When a user makes a register on location "xxx"
+    Then xxxxxxxxxxx
+    And payload is empty
