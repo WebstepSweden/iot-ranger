@@ -1,14 +1,17 @@
 package se.webstep.iotr.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toSet;
 
 public class Database {
 
+    private final Logger logger = LoggerFactory.getLogger(Database.class);
 
     private static Database instance;
 
@@ -16,13 +19,40 @@ public class Database {
 
     private Set<Registration> registrations;
 
+    private Set<Sensor> sensorStates;
+
 
     private Database() {
+
         this.locations = new HashSet<>();
         this.registrations = new HashSet<>();
+        this.sensorStates = new HashSet<>();
+        insertTestData();
+
     }
 
 
+    private void insertTestData() {
+
+        addLocation("Lobby");
+        addLocation("Boiler Room");
+        addLocation("Parking");
+        addLocation("Tee 1");
+
+        String id = "206881543";
+        LocalDateTime now = LocalDateTime.now();
+        register(id, now, "Lobby");
+        register(id, now.minusSeconds(1), "Lobby");
+        register(id, now.minusSeconds(2), "Lobby");
+        register(id, now.minusSeconds(3), "Lobby");
+        register(id, now, "Boiler Room");
+        register(id, now.minusSeconds(3), "Boiler Room");
+        register(id, now, "Parking");
+        register(id, now.minusSeconds(4), "Parking");
+        register(id, now, "Tee 1");
+        register(id, now.minusMinutes(3).minusSeconds(12), "Tee 1");
+
+    }
 
 
     public static Database instance() {
@@ -33,13 +63,9 @@ public class Database {
     }
 
 
-
-
     public Set<Location> getLocations() {
         return locations;
     }
-
-
 
 
     public boolean addLocation(String name) {
@@ -58,7 +84,7 @@ public class Database {
 
     public Location getLocation(String name) {
         Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
-        if(!loc.isPresent()) {
+        if (!loc.isPresent()) {
             return null;
         }
 
@@ -72,6 +98,16 @@ public class Database {
     }
 
 
+    public boolean deleteLocation(String name) {
+        Optional<Location> loc = locations.stream().filter(l -> l.getName().equals(name)).findFirst();
+        if (!loc.isPresent()) {
+            return false;
+        }
+
+        locations.remove(loc.get());
+        return true;
+
+    }
 
 
     public boolean locationExists(String name) {
@@ -79,21 +115,26 @@ public class Database {
     }
 
 
-
     public Registration register(String id, LocalDateTime timestamp, String locationName) {
 
         Optional<Location> location = locations.stream().filter(l -> l.getName().equals(locationName)).findFirst();
-        if(!location.isPresent()) {
+        if (!location.isPresent()) {
             return null;
         }
 
         Registration registration = new Registration(id, timestamp, location.get().getName());
         registrations.add(registration);
         return registration;
-        
+
     }
 
+    public void addSensorState(Sensor sensor) {
+        sensorStates.add(sensor);
+    }
 
+    public Set<Sensor> getSensorStates() {
+        return sensorStates;
+    }
 
 
 }

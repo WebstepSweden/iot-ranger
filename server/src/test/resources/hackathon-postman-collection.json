@@ -1,0 +1,130 @@
+{
+	"variables": [],
+	"info": {
+		"name": "IOT Hackathon",
+		"_postman_id": "caf6f7a6-8112-602d-fbe9-fce5ccf889a1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Things",
+			"request": {
+				"url": "https://api.disruptive-technologies.com/v1/things",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ApiKey d45a7c14c88f48f5937a8fc3254378ad",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Thing",
+			"request": {
+				"url": "https://api.disruptive-technologies.com/v1/things/206881543",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ApiKey d45a7c14c88f48f5937a8fc3254378ad",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add location",
+			"request": {
+				"url": "localhost:8080/ranger/location?id=123&timestamp=2017-04-08T10:11:12.123&location=Room+1",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Localhost test get Folke",
+			"request": {
+				"url": "http://10.47.52.99:8080/ranger",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"url": "localhost:8080/ranger/register?id=123&timestamp=2017-04-08T10:11:12.123&location=Room+1",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Locations",
+			"request": {
+				"url": "localhost:8080/ranger/locations",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Location",
+			"request": {
+				"url": "localhost:8080/ranger/location?Lobby",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Thing Historical",
+			"request": {
+				"url": "https://api.disruptive-technologies.com/v1/things/206854020/aggregate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ApiKey d45a7c14c88f48f5937a8fc3254378ad",
+						"description": ""
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"interval\": \"1h\",\n  \"time_period\": {\n    \"start\": \"2017-04-09T07:00:00Z\",\n    \"end\":   \"2017-04-09T18:00:00Z\"\n  },\n  \"fields\": [\n    {\n      \"name\": \"temperature\",\n      \"function\": 12\n    },\n    {\n      \"name\": \"temperature\",\n      \"function\": 11\n    }\n  ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
