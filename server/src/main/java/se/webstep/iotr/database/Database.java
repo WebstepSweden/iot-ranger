@@ -2,7 +2,6 @@ package se.webstep.iotr.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
@@ -19,14 +18,14 @@ public class Database {
 
     private Set<Registration> registrations;
 
-    private Set<Sensor> sensorStates;
+    private Set<TouchEvent> touchEvents;
 
 
     private Database() {
 
         this.locations = new HashSet<>();
         this.registrations = new HashSet<>();
-        this.sensorStates = new HashSet<>();
+        this.touchEvents = new HashSet<>();
         insertTestData();
 
     }
@@ -128,12 +127,14 @@ public class Database {
 
     }
 
-    public void addSensorState(Sensor sensor) {
-        sensorStates.add(sensor);
+
+    public void addTouchEvent(TouchEvent touchEvent) {
+        touchEvents.add(touchEvent);
     }
 
-    public Set<Sensor> getSensorStates() {
-        return sensorStates;
+
+    public Set<TouchEvent> getTouchEvents() {
+        return touchEvents;
     }
 
 

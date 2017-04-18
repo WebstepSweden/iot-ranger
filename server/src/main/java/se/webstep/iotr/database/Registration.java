@@ -3,7 +3,6 @@ package se.webstep.iotr.database;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import se.webstep.iotr.api.LocalDateTimeSerializer;
-
 import java.time.LocalDateTime;
 
 public class Registration {

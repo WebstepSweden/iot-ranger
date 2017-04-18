@@ -11,11 +11,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import se.webstep.iotr.client.DtClient;
 import se.webstep.iotr.database.Database;
 import se.webstep.iotr.database.Location;
 import se.webstep.iotr.database.Registration;
-import se.webstep.iotr.database.Sensor;
+import se.webstep.iotr.database.TouchEvent;
 import se.webstep.iotr.service.Reconsiliator;
 import javax.inject.Inject;
 import javax.validation.ValidationException;
@@ -45,6 +44,7 @@ public class RangerApi {
     @Inject
     private Reconsiliator reconsiliator;
 
+
     @RequestMapping(value = "register", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity register(@RequestParam(name = "id") String id,
                                    @RequestParam(name = "timestamp") @DateTimeFormat(iso = DATE_TIME) LocalDateTime timestamp,
@@ -56,6 +56,7 @@ public class RangerApi {
         return new ResponseEntity(registration, OK);
     }
 
+
     @RequestMapping(value = "location", method = PUT, produces = APPLICATION_JSON)
     public ResponseEntity addLocation(@RequestParam(name = "name") String name) {
         if (Database.instance().addLocation(name)) {
@@ -65,10 +66,12 @@ public class RangerApi {
         }
     }
 
+
     @RequestMapping(value = "locations", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity getLocations() {
         return new ResponseEntity(Database.instance().getLocations(), OK);
     }
+
 
     @RequestMapping(value = "location", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity getLocation(@RequestParam(name = "location") String locationName) {
@@ -77,11 +80,11 @@ public class RangerApi {
             return new ResponseEntity(NOT_FOUND);
         }
         Set<Registration> registrations = location.getRegistrations();
-        Set<Sensor> sensorStates = Database.instance().getSensorStates();
+        Set<TouchEvent> touchEVents = Database.instance().getTouchEvents();
         long toleranceMillis = 1500;
         for (Registration registration : registrations) {
-            for (Sensor sensorState : sensorStates) {
-                if (reconsiliator.match(registration, sensorState, toleranceMillis)) {
+            for (TouchEvent touchEvent : touchEVents) {
+                if (reconsiliator.match(registration, touchEvent, toleranceMillis)) {
                     registration.setInRange(true);
                 }
             }
@@ -89,16 +92,19 @@ public class RangerApi {
         return new ResponseEntity(location, OK);
     }
 
+
     @RequestMapping(value = "location", method = DELETE, produces = APPLICATION_JSON)
     public ResponseEntity deleteLocation(@RequestParam(name = "location") String locationName) {
         boolean deleted = Database.instance().deleteLocation(locationName);
         return new ResponseEntity(deleted ? OK : NOT_FOUND);
     }
 
+
     @RequestMapping(value = "ping", method = GET, produces = APPLICATION_JSON)
     public ResponseEntity ping() {
         return new ResponseEntity(OK);
     }
+
 
     private HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
@@ -107,17 +113,21 @@ public class RangerApi {
         return headers;
     }
 
+
     private ResponseEntity ok() {
         return new ResponseEntity(OK);
     }
+
 
     private ResponseEntity ok(Object object) {
         return new ResponseEntity(object, OK);
     }
 
+
     private ResponseEntity notFound() {
         return new ResponseEntity(NOT_FOUND);
     }
+
 
     @ExceptionHandler({
             MethodArgumentTypeMismatchException.class,

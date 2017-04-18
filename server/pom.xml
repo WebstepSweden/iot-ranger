@@ -17,13 +17,13 @@
         <spring.version>4.3.2.RELEASE</spring.version>
         <spring.boot.version>1.4.0.RELEASE</spring.boot.version>
         <spring.jsonData.version>1.11.0.RELEASE</spring.jsonData.version>
-        <mysql.connector.version>6.0.4</mysql.connector.version>
-        <groovy.version>2.4.8</groovy.version>
-        <spock.version>1.0-groovy-2.4</spock.version>
-        <h2.version>1.4.192</h2.version>
+        <!--<mysql.connector.version>6.0.4</mysql.connector.version>-->
+        <!--<groovy.version>2.4.8</groovy.version>-->
+        <!--<spock.version>1.0-groovy-2.4</spock.version>-->
+        <!--<h2.version>1.4.192</h2.version>-->
         <jsr311.api.version>1.1.1</jsr311.api.version>
-        <hibernate.java8.version>5.2.8.Final</hibernate.java8.version>
-        <cage.captcha.version>1.0</cage.captcha.version>
+        <!--<hibernate.java8.version>5.2.8.Final</hibernate.java8.version>-->
+        <!--<cage.captcha.version>1.0</cage.captcha.version>-->
         <junit.version>4.12</junit.version>
     </properties>
 
@@ -33,7 +33,6 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.4.0.RELEASE</version>
     </parent>
-
 
 
     <dependencies>
@@ -106,15 +105,6 @@
 
     <build>
         <plugins>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-surefire-plugin</artifactId>-->
-                <!--<version>2.19.1</version>-->
-                <!--<configuration>-->
-                    <!--<argLine>-Dspring.profiles.active=test</argLine>-->
-                <!--</configuration>-->
-
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
