@@ -101,7 +101,7 @@ class RoomViewController: UIViewController, UITextFieldDelegate, UITableViewData
         let inRange = sampleDict["inRange"] as? Bool
         cell.textLabel?.text = timestamp
         if inRange! {
-            cell.backgroundColor = UIColor.green
+            cell.backgroundColor = UIColor(red: 0.5, green: 1.0, blue: 0.5, alpha: 1.0)
         }
         return cell
     }

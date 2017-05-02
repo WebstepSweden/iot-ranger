@@ -2,8 +2,8 @@ import UIKit
 import Alamofire
 
 struct Constants {
-    static let ipAddress = "10.47.54.248" //"10.47.52.99"//
-    static let sensorId = "206881543"
+    static let ipAddress = "10.0.1.10" //"10.47.52.99"//
+    static let sensorId = "206762883"
 }
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {

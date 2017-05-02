@@ -27,7 +27,7 @@ public class Watcher {
 
     private Consumer<JsonNode> selfConsumer = jsonNode -> {
 
-        System.out.println(format("Node: %s", jsonNode));         ;
+        System.out.println(format("Stage changed for thing: %s", jsonNode));
 
 
         Boolean isTouch = jsonNode.at("/result/state_changed/touch").asBoolean(false);
@@ -39,7 +39,10 @@ public class Watcher {
             String thingId = jsonNode.at("/result/thing_id").asText();
             LocalDateTime lastPressed = ZonedDateTime.parse(jsonNode.at("/result/state_changed/last_pressed").asText()).toLocalDateTime().atZone(ZoneId.systemDefault()).toLocalDateTime();
             TouchEvent te = new TouchEvent(thingId, lastPressed);
+            if(thingId.equals("206762883")) {
             Database.instance().addTouchEvent(te);
+
+            }
         } else if(isProximity) {
             System.out.println("Proximity registered");
         }
