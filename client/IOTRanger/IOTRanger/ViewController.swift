@@ -2,7 +2,7 @@ import UIKit
 import Alamofire
 
 struct Constants {
-    static let ipAddress = "10.0.1.10" //"10.47.52.99"//
+    static let ipAddress = "192.168.1.107" //"10.47.52.99"//
     static let sensorId = "206762883"
 }
 

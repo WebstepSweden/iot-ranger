@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
-import static java.lang.String.format;
+import static java.lang.String.format   ;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 @Component
